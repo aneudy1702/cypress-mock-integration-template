@@ -1,0 +1,59 @@
+name: Cypress Tests
+
+# Define when the workflow should run
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Cache Node modules
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Step 3: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 5: Start the application server
+      - name: Start application server
+        run: npm run start &
+        env:
+          CI: true
+
+      # Step 6: Wait for the server to be ready
+      - name: Wait for server to be ready
+        uses: jakejarvis/wait-action@v1
+        with:
+          url: "http://localhost:3000"
+          timeout: "60" # Wait up to 60 seconds
+
+      # Step 7: Run Cypress tests in headless mode
+      - name: Run Cypress tests
+        run: npx cypress run
+        env:
+          # Add any environment variables required by your tests here
+          # Example: CYPRESS_API_URL: 'http://localhost:3000/api'

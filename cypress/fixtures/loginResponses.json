@@ -1,0 +1,20 @@
+{
+  "success": {
+    "statusCode": 200,
+    "body": {
+      "token": "mock-jwt-token"
+    }
+  },
+  "invalidCredentials": {
+    "statusCode": 401,
+    "body": {
+      "error": "Invalid credentials"
+    }
+  },
+  "serverError": {
+    "statusCode": 500,
+    "body": {
+      "error": "Internal server error"
+    }
+  }
+}
