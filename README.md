@@ -90,4 +90,7 @@ We welcome contributions! If you find a bug or have a feature request, please op
 5. Open a pull request.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+
+![image](https://github.com/user-attachments/assets/f8be25cf-1ec2-4848-aae0-8f2a16a043d8)
+
