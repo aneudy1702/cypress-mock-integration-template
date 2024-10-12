@@ -54,6 +54,6 @@ jobs:
       # Step 7: Run Cypress tests in headless mode
       - name: Run Cypress tests
         run: npx cypress run
-        env:
-          # Add any environment variables required by your tests here
-          # Example: CYPRESS_API_URL: 'http://localhost:3000/api'
+        # env:
+        # Add any environment variables required by your tests here
+        # Example: CYPRESS_API_URL: 'http://localhost:3000/api'
