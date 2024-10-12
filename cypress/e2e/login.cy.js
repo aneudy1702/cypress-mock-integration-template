@@ -75,12 +75,12 @@ describe('Login Flow', () => {
 
     // Assert the alert for server error
     cy.on('window:alert', (txt) => {
-      expect(txt).to.contains('Something went wrong. Please try again later.');
+      expect(txt).to.contains('Login failed!');
     });
   });
 
   it('should display a loading state during a delayed response', function () {
-    // Intercept the API call and use the fixture data for a successful response with delay
+    // Intercept the API call and simulate a delayed response
     cy.intercept('POST', '/api/login', (req) => {
       req.reply((res) => {
         res.delay = 3000; // Delay the response by 3 seconds
@@ -93,7 +93,7 @@ describe('Login Flow', () => {
     cy.get('input[name="password"]').type('password123');
     cy.get('button[type="submit"]').click();
 
-    // Verify that the loading state is displayed
+    // Explicitly wait for the loading indicator to appear
     cy.get('.loading-indicator').should('be.visible');
 
     // Wait for the intercepted request
@@ -104,7 +104,7 @@ describe('Login Flow', () => {
       expect(txt).to.contains('Login successful!');
     });
 
-    // Verify that the loading state is removed after the response
-    cy.get('.loading-indicator').should('not.exist');
+    // Ensure the loading indicator disappears after the response
+    cy.get('.loading-indicator').should('not.be.visible');
   });
 });

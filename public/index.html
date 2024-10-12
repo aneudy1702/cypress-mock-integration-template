@@ -5,34 +5,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+  <style>
+    /* Basic styles for the loading indicator */
+    .loading-indicator {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      color: #333;
+    }
+  </style>
 </head>
 
 <body>
   <h1>Welcome to Cypress Testing</h1>
+
+  <!-- Loading indicator -->
+  <div class="loading-indicator" id="loading-indicator">Loading...</div>
+
   <form id="login-form">
     <input type="text" name="username" placeholder="Username" required />
     <input type="password" name="password" placeholder="Password" required />
     <button type="submit">Login</button>
   </form>
+
   <script>
     const form = document.getElementById('login-form');
+    const loadingIndicator = document.getElementById('loading-indicator');
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const username = form.username.value;
       const password = form.password.value;
 
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      });
+      // Show the loading indicator when the form is submitted
+      loadingIndicator.style.display = 'block';
 
-      if (response.ok) {
-        alert('Login successful!');
-      } else {
-        alert('Login failed!');
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
+        });
+
+        // Hide the loading indicator after the response
+        loadingIndicator.style.display = 'none';
+
+        if (response.ok) {
+          alert('Login successful!');
+        } else {
+          alert('Login failed!');
+        }
+      } catch (error) {
+        // Hide the loading indicator in case of an error
+        loadingIndicator.style.display = 'none';
+        alert('Something went wrong. Please try again later.');
       }
     });
   </script>
