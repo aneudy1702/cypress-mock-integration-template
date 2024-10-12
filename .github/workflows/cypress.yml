@@ -1,6 +1,5 @@
 name: Cypress Tests
 
-# Define when the workflow should run
 on:
   push:
     branches:
@@ -14,6 +13,7 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+
     steps:
       # Step 1: Checkout the code
       - name: Checkout code
@@ -32,19 +32,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: '16'
 
       # Step 4: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 5: Start the application server
+      # Step 5: Start application server
       - name: Start application server
         run: npm run start &
         env:
           CI: true
 
-      # Step 6: Wait for the server to be ready using curl
+      # Step 6: Wait for server to be ready
       - name: Wait for server to be ready
         run: |
           for i in $(seq 1 60); do
@@ -53,9 +53,33 @@ jobs:
             sleep 1
           done
 
-      # Step 7: Run Cypress tests in headless mode
+      # Step 7: Run Cypress tests
       - name: Run Cypress tests
-        run: npx cypress run
-        # env:
-        # Add any environment variables required by your tests here
-        # Example: CYPRESS_API_URL: 'http://localhost:3000/api'
+        run: npm run cypress:run
+
+      # Step 8: Generate the HTML report
+      - name: Generate HTML report
+        run: npm run generate-report
+
+      # Step 9: Upload Cypress screenshots as an artifact
+      - name: Upload Cypress screenshots
+        if: always()  # Upload screenshots even if the test fails
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      # Step 10: Upload Cypress videos as an artifact
+      - name: Upload Cypress videos
+        if: always()  # Upload videos even if the test fails
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
+      # Step 11: Upload the HTML report as an artifact
+      - name: Upload Cypress Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-report
+          path: cypress/reports/mochawesome.html
