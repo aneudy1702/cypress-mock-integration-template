@@ -93,7 +93,8 @@ describe('Login Flow', () => {
     cy.get('input[name="password"]').type('password123');
     cy.get('button[type="submit"]').click();
 
-    // Explicitly wait for the loading indicator to appear
+    // Wait for the loading indicator to appear, but explicitly wait before checking
+    cy.wait(500); // Wait 500 milliseconds before checking for the loading indicator
     cy.get('.loading-indicator').should('be.visible');
 
     // Wait for the intercepted request

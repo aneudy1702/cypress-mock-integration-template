@@ -52,6 +52,9 @@
           body: JSON.stringify({ username, password })
         });
 
+        // Force the loading indicator to stay visible for at least 1 second
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
         // Hide the loading indicator after the response
         loadingIndicator.style.display = 'none';
 
