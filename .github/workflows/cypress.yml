@@ -44,12 +44,14 @@ jobs:
         env:
           CI: true
 
-      # Step 6: Wait for the server to be ready
+      # Step 6: Wait for the server to be ready using curl
       - name: Wait for server to be ready
-        uses: jakejarvis/wait-action@v1
-        with:
-          url: "http://localhost:3000"
-          timeout: "60" # Wait up to 60 seconds
+        run: |
+          for i in $(seq 1 60); do
+            curl --silent http://localhost:3000 && break
+            echo "Waiting for server..."
+            sleep 1
+          done
 
       # Step 7: Run Cypress tests in headless mode
       - name: Run Cypress tests
