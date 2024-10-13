@@ -1,1 +1,7 @@
 node_modules
+
+# Cypress specific folders - These are used by Cypress to store runtime data
+cypress/reports
+cypress/screenshots
+cypress/downloads
+cypress/videos

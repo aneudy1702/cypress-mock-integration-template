@@ -14,8 +14,8 @@ module.exports = defineConfig({
     reporterOptions: {
       reportDir: 'cypress/reports',
       overwrite: false,
-      html: false,
-      json: true,
+      html: false, // Disable HTML generation during run
+      json: true, // Enable JSON report generation
     },
   },
 });
