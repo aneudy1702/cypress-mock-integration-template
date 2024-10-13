@@ -3,100 +3,177 @@
 [![Cypress Tests](https://github.com/aneudy1702/cypress-mock-integration-template/actions/workflows/cypress.yml/badge.svg)](https://github.com/aneudy1702/cypress-mock-integration-template/actions)
 
 ## Overview
-This repository provides a Cypress testing template designed to mock backend services using `cy.intercept()`, allowing for reliable and isolated frontend integration testing. This template is perfect for frontend teams who want to validate user flows and behavior without depending on complex backend services.
+Welcome to the **Cypress Mock Integration Template** repository! This project is designed to help frontend developers simulate backend responses while writing Cypress tests. You can either integrate the template manually into your project or use the CLI tool for a one-command setup.
 
 ## Features
-- **Mock Backend Responses**: Use `cy.intercept()` to simulate different backend scenarios (e.g., successful responses, errors, timeouts).
-- **Visual Testing Integration**: Configure visual testing tools to compare snapshots and identify UI regressions.
-- **GitHub Actions CI/CD**: Automated testing pipeline set up using GitHub Actions to run tests on every push/pull request.
-- **Custom Reporting**: Generate detailed test reports and set up Slack notifications for real-time updates.
-
-## Test Reports
-
-Test reports and artifacts (screenshots and videos) are generated for each test run. You can view the latest reports and artifacts in the [GitHub Actions](https://github.com/aneudy1702/cypress-mock-integration-template/actions) tab by selecting the latest workflow run and downloading the artifacts listed under "cypress-report".
+- **Mock Backend Responses**: Easily mock different backend scenarios such as successful responses, errors, and timeouts using `cy.intercept()`.
+- **Automated Testing Setup**: Quickly set up Cypress with a GitHub Actions workflow, reporting, and folder structure.
+- **Manual or CLI Installation**: Choose between copying the configurations manually or running a single CLI command to get everything set up in seconds.
 
 ## Getting Started
 
-### Prerequisites
-- **Node.js** (v14 or later)
-- **npm** (v6 or later)
-- **Cypress** (v10 or later)
+### Option 1: Use the CLI Tool
 
-### Installation
-1. Clone the repository:
+Let’s say you’re in a hurry, and you don’t want to manually move files around. You can simply let the CLI do the heavy lifting for you.
+
+1. First, install the CLI using `npx`:
+
    ```bash
-   git clone https://github.com/your-username/cypress-mock-integration-template.git
-   ```
-2. Navigate into the project directory:
-   ```bash
-   cd cypress-mock-integration-template
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
+   npx cypress-mock-integration-template init
    ```
 
-### Running Tests
-To run the Cypress tests locally:
+   The CLI will handle:
+   - Creating the Cypress folder structure.
+   - Adding Cypress configurations, test files, and GitHub Actions workflow.
+   - Updating your `package.json` with Cypress and reporting scripts.
+
+   **You’ll be ready to run tests in seconds!**
+
+2. Run your Cypress tests:
+
+   Open the Cypress test runner:
    ```bash
-   npx cypress open
+   npm run cypress:open
    ```
-   - This will open the Cypress Test Runner where you can run tests interactively.
 
-To run tests in headless mode:
+   Or run the tests in headless mode:
    ```bash
-   npx cypress run
+   npm run cypress:run
    ```
 
-## Project Structure
-```
-cypress-mock-integration-template/
-│
-├── cypress/
-│   ├── fixtures/           # Static mock data used in tests
-│   ├── integration/        # Cypress test files
-│   ├── plugins/            # Plugins for Cypress configuration
-│   └── support/            # Custom commands and utilities
-│
-├── .github/
-│   └── workflows/
-│       └── cypress.yml     # GitHub Actions workflow for CI/CD
-│
-├── cypress.config.js       # Cypress configuration file
-├── package.json            # Node.js dependencies and scripts
-└── README.md               # Project documentation
-```
+3. Generate reports:
 
-## Using `cy.intercept()`
-We use `cy.intercept()` to control and mock backend responses. This approach allows you to:
-- Simulate success, failure, and edge cases.
-- Validate frontend behavior in isolation from backend dependencies.
-  
-For detailed usage examples, check out the [Wiki](https://github.com/your-username/cypress-mock-integration-template/wiki/Part-One:-cy.intercept()-Best-Practices) where we provide in-depth guides and test cases.
+   After your tests have run, generate the HTML report:
+   ```bash
+   npm run report:generate
+   ```
 
-## Setting Up CI/CD with GitHub Actions
-This template includes a GitHub Actions workflow (`cypress.yml`) that:
-- Runs tests on every push and pull request.
-- Caches dependencies for faster execution.
-- Provides test reports and failure logs.
+### Option 2: Manual Installation
 
-To enable GitHub Actions, ensure you have the appropriate permissions and GitHub Secrets set up for any environment variables required.
+If you prefer to integrate the template manually, no problem! Just follow these steps to copy the necessary files and configurations into your project.
 
-## Visual Testing and Reporting
-For advanced visual testing, we recommend integrating tools like **Percy** or **Applitools**. The template includes placeholders and configurations for these tools. Detailed setup instructions and reporting features will be covered in the Wiki.
+1. **Create the Cypress folder structure**:
+
+   ```bash
+   mkdir -p cypress/{fixtures,e2e,reports,videos,screenshots,plugins,support}
+   mkdir -p .github/workflows
+   ```
+
+2. **Copy the configuration files**:
+
+   - **`cypress.config.js`**:
+
+     ```javascript
+     const { defineConfig } = require('cypress');
+
+     module.exports = defineConfig({
+       e2e: {
+         setupNodeEvents(on, config) {
+           // implement node event listeners here
+         },
+         baseUrl: 'http://localhost:3000',
+         specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
+         supportFile: 'cypress/support/index.js',
+         video: true,
+         screenshotOnRunFailure: true,
+         reporter: 'mochawesome',
+         reporterOptions: {
+           reportDir: 'cypress/reports',
+           overwrite: false,
+           html: false,
+           json: true,
+         },
+       },
+     });
+     ```
+
+   - **GitHub Actions Workflow (`.github/workflows/cypress.yml`)**:
+
+     ```yaml
+     name: Cypress Tests
+
+     on:
+       push:
+         branches:
+           - main
+           - develop
+       pull_request:
+         branches:
+           - main
+           - develop
+
+     jobs:
+       cypress-run:
+         runs-on: ubuntu-latest
+
+         steps:
+           - name: Checkout code
+             uses: actions/checkout@v4
+
+           - name: Cache Node modules
+             uses: actions/cache@v4
+             with:
+               path: ~/.npm
+               key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+               restore-keys: |
+                 ${{ runner.os }}-node-
+
+           - name: Set up Node.js environment
+             uses: actions/setup-node@v4
+             with:
+               node-version: "20"
+
+           - name: Install dependencies
+             run: npm install
+
+           - name: Create placeholder directories for screenshots and videos
+             run: |
+               mkdir -p cypress/screenshots
+               mkdir -p cypress/videos
+
+           - name: Start application server
+             run: npm run start &
+             env:
+               CI: true
+
+           - name: Run Cypress tests
+             run: npm run cypress:run
+
+           - name: Generate HTML report
+             run: npm run report:generate
+
+           - name: Upload Cypress Report
+             uses: actions/upload-artifact@v4
+             with:
+               name: cypress-report
+               path: cypress/reports/report.html
+     ```
+
+3. **Add the necessary scripts to `package.json`**:
+
+   ```json
+   {
+     "scripts": {
+       "cypress:open": "cypress open",
+       "cypress:run": "cypress run",
+       "report:merge-json": "npx mochawesome-merge cypress/reports/*.json > cypress/reports/report.json",
+       "report:generate-html": "npx mochawesome-report-generator cypress/reports/report.json --reportDir cypress/reports --inline",
+       "report:generate": "npm run report:merge-json && npm run report:generate-html"
+     }
+   }
+   ```
+
+4. **Install Cypress and report generator**:
+
+   ```bash
+   npm install cypress mochawesome mochawesome-merge mochawesome-report-generator
+   ```
+
+Once you've copied all the necessary files, you’re good to go! You can now run the same commands to open Cypress, run tests, and generate reports.
 
 ## Contributing
-We welcome contributions! If you find a bug or have a feature request, please open an issue or submit a pull request.
+We welcome contributions! Feel free to open an issue or submit a pull request if you want to improve this template.
 
-### Steps for Contribution
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/new-feature`).
-3. Commit your changes (`git commit -m 'Add new feature'`).
-4. Push the branch (`git push origin feature/new-feature`).
-5. Open a pull request.
+---
 
-## License
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
-
-![image](https://github.com/user-attachments/assets/f8be25cf-1ec2-4848-aae0-8f2a16a043d8)
-
+This approach gives developers full flexibility to either use the CLI for speed or manually copy configurations for more control. Let me know if you need further adjustments!

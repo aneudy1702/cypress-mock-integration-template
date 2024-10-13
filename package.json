@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "## Overview This repository provides a Cypress testing template designed to mock backend services using `cy.intercept()`, allowing for reliable and isolated frontend integration testing. This template is perfect for frontend teams who want to validate user flows and behavior without depending on complex backend services.",
   "main": "cypress.config.js",
+  "bin": {
+    "cypress-mock-integration-template": "./cli.js"
+  },
   "scripts": {
     "start": "node server.js",
     "test": "start-server-and-test start http://localhost:3000 cypress:open",
