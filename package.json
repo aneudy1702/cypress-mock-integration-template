@@ -8,8 +8,10 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "jest --coverage",
-    "test:cy": "start-server-and-test start http://localhost:3000 cypress:open",
+    "test": "test:jest:ci",
+    "test:jest": "jest",
+    "test:jest:ci": "jest --coverage --ci",
+    "test:cy:local": "start-server-and-test start http://localhost:3000 cypress:open",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "report:merge-json": "npx mochawesome-merge cypress/reports/*.json > cypress/reports/report.json",
@@ -31,7 +33,9 @@
     "express": "^4.21.1"
   },
   "jest": {
-    "testMatch": ["**/tests/**/*.test.js"],
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
     "coverageDirectory": "./coverage",
     "collectCoverage": true
   }
