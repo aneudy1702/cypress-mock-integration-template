@@ -1,10 +1,15 @@
 node_modules
 
 # Cypress specific folders - These are used by Cypress to store runtime data
-cypress/reports
 cypress/screenshots
 cypress/downloads
 cypress/videos
+
+# Allow reports in CI but ignore locally
+cypress/reports/*
+# This explicitly allows the HTML report files (e.g., mochawesome.html)
+# to be tracked and uploaded as artifacts, even though the rest of the folder is ignored.
+!cypress/reports/*.html
 
 # Ignore the cypress binary
 .DS_Store
