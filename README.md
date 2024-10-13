@@ -1,6 +1,6 @@
 # Cypress Mock Integration Template
 
-[![Cypress Tests](https://github.com/aneudy1702/cypress-mock-integration-template/actions/workflows/cypress.yml/badge.svg)](https://github.com/aneudy1702/cypress-mock-integration-template/actions)
+[![Cypress Tests](https://github.com/aneudy1702/cypress-mock-integration-template/actions/workflows/cypress-jest.yml/badge.svg)](https://github.com/aneudy1702/cypress-mock-integration-template/actions)
 
 ## Overview
 Welcome to the **Cypress Mock Integration Template** repository! This project is designed to help frontend developers simulate backend responses while writing Cypress tests. You can integrate the template manually into your project or use the CLI tool for a one-command setup.
