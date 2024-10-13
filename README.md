@@ -1,5 +1,7 @@
 # Cypress Mock Integration Template
 
+[![Cypress Tests](https://github.com/aneudy1702/cypress-mock-integration-template/actions/workflows/cypress.yml/badge.svg)](https://github.com/aneudy1702/cypress-mock-integration-template/actions)
+
 ## Overview
 This repository provides a Cypress testing template designed to mock backend services using `cy.intercept()`, allowing for reliable and isolated frontend integration testing. This template is perfect for frontend teams who want to validate user flows and behavior without depending on complex backend services.
 
@@ -8,6 +10,10 @@ This repository provides a Cypress testing template designed to mock backend ser
 - **Visual Testing Integration**: Configure visual testing tools to compare snapshots and identify UI regressions.
 - **GitHub Actions CI/CD**: Automated testing pipeline set up using GitHub Actions to run tests on every push/pull request.
 - **Custom Reporting**: Generate detailed test reports and set up Slack notifications for real-time updates.
+
+## Test Reports
+
+Test reports and artifacts (screenshots and videos) are generated for each test run. You can view the latest reports and artifacts in the [GitHub Actions](https://github.com/aneudy1702/cypress-mock-integration-template/actions) tab by selecting the latest workflow run and downloading the artifacts listed under "cypress-report".
 
 ## Getting Started
 
