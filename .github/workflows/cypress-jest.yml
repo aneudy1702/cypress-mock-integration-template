@@ -40,6 +40,15 @@ jobs:
           name: jest-coverage
           path: coverage
 
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # Add this to your GitHub Secrets
+          files: ./coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
+
   # Job for running Cypress tests
   run-cypress-tests:
     runs-on: ubuntu-latest
