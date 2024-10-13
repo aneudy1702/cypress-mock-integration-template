@@ -3,12 +3,12 @@
 [![Cypress Tests](https://github.com/aneudy1702/cypress-mock-integration-template/actions/workflows/cypress.yml/badge.svg)](https://github.com/aneudy1702/cypress-mock-integration-template/actions)
 
 ## Overview
-Welcome to the **Cypress Mock Integration Template** repository! This project is designed to help frontend developers simulate backend responses while writing Cypress tests. You can either integrate the template manually into your project or use the CLI tool for a one-command setup.
+Welcome to the **Cypress Mock Integration Template** repository! This project is designed to help frontend developers simulate backend responses while writing Cypress tests. You can integrate the template manually into your project or use the CLI tool for a one-command setup.
 
 ## Features
 - **Mock Backend Responses**: Easily mock different backend scenarios such as successful responses, errors, and timeouts using `cy.intercept()`.
 - **Automated Testing Setup**: Quickly set up Cypress with a GitHub Actions workflow, reporting, and folder structure.
-- **Manual or CLI Installation**: Choose between copying the configurations manually or running a single CLI command to get everything set up in seconds.
+- **Manual or CLI Installation**: You can choose between copying the configurations manually or running a single CLI command to set everything up in seconds.
 
 ## Getting Started
 
@@ -50,7 +50,7 @@ Let’s say you’re in a hurry, and you don’t want to manually move files aro
 
 ### Option 2: Manual Installation
 
-If you prefer to integrate the template manually, no problem! Just follow these steps to copy the necessary files and configurations into your project.
+If you prefer to integrate the template manually, no problem! Follow these steps to copy the necessary files and configurations into your project.
 
 1. **Create the Cypress folder structure**:
 
@@ -169,11 +169,7 @@ If you prefer to integrate the template manually, no problem! Just follow these 
    npm install cypress mochawesome mochawesome-merge mochawesome-report-generator
    ```
 
-Once you've copied all the necessary files, you’re good to go! You can now run the same commands to open Cypress, run tests, and generate reports.
+You're good to go once you've copied all the necessary files! You can now run the same commands to open Cypress, run tests, and generate reports.
 
 ## Contributing
-We welcome contributions! Feel free to open an issue or submit a pull request if you want to improve this template.
-
----
-
-This approach gives developers full flexibility to either use the CLI for speed or manually copy configurations for more control. Let me know if you need further adjustments!
+We welcome contributions! If you want to improve this template, feel free to open an issue or submit a pull request.
