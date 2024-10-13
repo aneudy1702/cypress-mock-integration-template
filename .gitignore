@@ -13,3 +13,6 @@ cypress/reports/*
 
 # Ignore the cypress binary
 .DS_Store
+
+# Jest coverage
+coverage
