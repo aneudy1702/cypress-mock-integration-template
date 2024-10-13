@@ -1,0 +1,36 @@
+name: Code Review
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Step 3: Install Danger.js
+      - name: Install Danger.js
+        run: npm install danger --save-dev
+
+      # Step 4: Run Danger.js for PR review
+      - name: Run Danger
+        run: npx danger pr
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Optionally, run ESLint or any other code review checks
+      - name: Run ESLint
+        run: npm run lint
