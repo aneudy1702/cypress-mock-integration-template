@@ -5,3 +5,6 @@ cypress/reports
 cypress/screenshots
 cypress/downloads
 cypress/videos
+
+# Ignore the cypress binary
+.DS_Store

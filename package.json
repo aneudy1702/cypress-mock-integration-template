@@ -8,7 +8,9 @@
     "test": "start-server-and-test start http://localhost:3000 cypress:open",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "generate-report": "npx mochawesome-merge cypress/reports/*.json | npx mochawesome-report-generator --reportDir cypress/reports --inline"
+    "report:merge-json": "npx mochawesome-merge cypress/reports/*.json > cypress/reports/merged-output.json",
+    "report:generate-html": "npx mochawesome-report-generator cypress/reports/merged-output.json --reportDir cypress/reports --inline",
+    "report:generate": "npm run report:merge-json && npm run report:generate-html"
   },
   "keywords": [],
   "author": "",
