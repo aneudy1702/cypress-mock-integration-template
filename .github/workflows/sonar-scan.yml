@@ -9,6 +9,7 @@ on:
 jobs:
   sonarcloud:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,10 +22,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Using the official SonarCloud action
+      # SonarCloud Scan step with required properties
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           projectBaseDir: .
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: cypress-mock-integration-template
+          SONAR_ORGANIZATION: aneudy1702
