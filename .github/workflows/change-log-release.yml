@@ -11,24 +11,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Set up Git user for committing the version bump and changelog
+      # Step 2: Set up Git user for committing the version bump and changelog
       - name: Configure Git
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
 
-      # Install dependencies
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Bump version and create changelog using standard-version
+      # Step 4: Bump version and create changelog using standard-version
       - name: Bump version and create changelog
         run: npx standard-version --release-as minor
 
-      # Push the changes (bumped version, changelog, and tag) back to the repository
+      # Step 5: Push the changes (bumped version, changelog, and tag) back to the repository
       - name: Push changes back to the repository
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
@@ -36,7 +37,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Publish the package to npm
+      # Step 6: Publish the package to npm
       - name: Publish to npm
         run: npm publish
         env:
