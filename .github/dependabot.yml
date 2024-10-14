@@ -1,0 +1,9 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/" # Location of your package.json
+    schedule:
+      interval: "weekly" # You can change this to daily, monthly, etc.
+    commit-message:
+      prefix: "chore(deps)"
+    open-pull-requests-limit: 5
