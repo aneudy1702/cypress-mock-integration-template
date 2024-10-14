@@ -1,4 +1,4 @@
-name: Tag and Release
+name: Tag, Release, and Publish to npm
 
 on:
   push:
@@ -35,3 +35,9 @@ jobs:
           git push --follow-tags origin ${{ github.ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Publish the package to npm
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
