@@ -23,7 +23,7 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm install --registry=https://registry.npmjs.org/
 
       # Step 4: Bump version and create changelog using standard-version
       - name: Bump version and create changelog
