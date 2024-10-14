@@ -24,13 +24,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Run standard-version to bump version, update changelog, and create a tag
+      # Bump version and create changelog using standard-version
       - name: Bump version and create changelog
         run: npx standard-version --release-as minor
 
       # Push the changes (bumped version, changelog, and tag) back to the repository
       - name: Push changes back to the repository
         run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push --follow-tags origin ${{ github.ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
