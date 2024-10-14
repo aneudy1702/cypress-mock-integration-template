@@ -14,6 +14,12 @@ jobs:
       # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Set up Node.js environment
+            uses: actions/setup-node@v4
+            with:
+              node-version: "20"
+              registry-url: "https://registry.npmjs.org/"
 
       # Step 2: Set up Git user for committing the version bump and changelog
       - name: Configure Git
