@@ -1,54 +1,36 @@
-name: Tag, Changelog, and Release
+name: Tag and Release
 
 on:
   push:
     branches:
       - main
+      - develop
 
 jobs:
-  tag-and-release:
+  release:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+      # Set up Git user for committing the version bump and changelog
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
 
-      # Step 3: Install dependencies
+      # Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Generate the changelog (assuming you use standard-version or similar)
-      - name: Update Changelog
+      # Run standard-version to bump version, update changelog, and create a tag
+      - name: Bump version and create changelog
         run: npx standard-version --release-as minor
 
-      # Step 5: Push the new tags and changelog to the repo
-      - name: Push tag and changes
+      # Push the changes (bumped version, changelog, and tag) back to the repository
+      - name: Push changes back to the repository
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "actions@github.com"
-          git push --follow-tags origin main
-
-      # Step 6: Create a GitHub Release
-      - name: Create GitHub Release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: Changelog update
-          draft: false
-          prerelease: false
+          git push --follow-tags origin ${{ github.ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Step 7: Publish to npm
-      - name: Publish to npm
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # You need to add this token in your repo secrets
